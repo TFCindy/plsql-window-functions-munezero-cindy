@@ -30,9 +30,9 @@ The analysis utilizes a relational database with three primary tables:
 ### Table Structure
 | Table | Purpose | Key Columns |
 | :--- | :--- | :--- |
-| `customers` | Customer information | `customer_id` (PK), `name`, `region`, `signup_date` |
-| `products` | Product catalog | `product_id` (PK), `name`, `category`, `price` |
-| `transactions` | Sales records | `transaction_id` (PK), `customer_id` (FK), `product_id` (FK), `sale_date`, `quantity`, `amount` |
+| `customers` | Customer information | `customer_id` (PK), `name`, `region`|
+| `products` | Product catalog | `product_id` (PK), `name`, `category`|
+| `transactions` | Sales records | `transaction_id` (PK), `customer_id` (FK), `product_id` (FK), `sale_date`, `amount` |
 
 ### Entity-Relationship Diagram
 ![ER Diagram](er_diagram.png)
