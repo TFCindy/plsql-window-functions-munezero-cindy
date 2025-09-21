@@ -96,6 +96,16 @@ SELECT customer_id, name, region, total_spent,
 FROM customer_stats
 ORDER BY total_spent DESC;
 ```
+Interpretation: Customers are segmented into four value quartiles, with the top quartile (Q1) contributing to 45% of total revenue, indicating high value concentration.
+## Step 5: GitHub Repository
+
+This repository (plsql-window-functions-munezero-cindy) is public and contains:
+
+#### SQL scripts (schema/, queries/ folders): Error-free creation, population, and querying scripts.
+
+#### Screenshots (screenshots/ folder): Clear results from all window function queries.
+
+#### Professional README: This file, containing the problem definition, schema, queries, insights, and references.
 ## Step 6: Results Analysis
 
 ### 1. Descriptive Analysis (What happened?)
