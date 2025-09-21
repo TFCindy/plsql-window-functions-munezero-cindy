@@ -103,6 +103,8 @@ Query Results Analysis:
 -John Doe (Kigali) ranks second with 25,000 RWF, sharing the same revenue as Sarah Williams (South) but ranked differently due to regional partitioning
 
 -Michael Brown (East) and Robert Johnson (North) are the sole top performers in their regions
+
+
 Interpretation: The analysis reveals Jane Smith as Kigali's top revenue generator with 45,000 RWF, while other regions have single dominant customers. The different ranking methods (RANK vs DENSE_RANK) show how tied scores are handled, providing flexibility in performance evaluation across regions.
 
 ### 2. Aggregate Functions
@@ -165,6 +167,7 @@ Query Results Analysis:
 -March showed further decline to 18,000 RWF, creating a concerning downward trend
 
 -The 3-month moving average decreased from 70,000 to 41,666 RWF, indicating sustained negative momentum
+
 Interpretation: The running totals show a concerning downward trend from January's peak of 70,000 RWF to March's 18,000 RWF. The moving averages confirm sustained negative momentum, highlighting the need for immediate intervention to reverse this declining sales pattern.
 
 ### 3. Navigation Functions
@@ -219,6 +222,7 @@ Query Results Analysis:
 -March continued the negative trend with a -51.35% decrease from February
 
 -The consistent negative growth percentages indicate a serious sales performance issue
+
 Interpretation: The month-over-month analysis reveals severe declines of -47% and -51% in consecutive months. These dramatic drops indicate serious underlying issues in sales strategy or market conditions that require urgent investigation and corrective action.
 ### 4. Distribution Functions
 **Query:** Customer segmentation by spending quartiles
@@ -267,6 +271,7 @@ Query Results Analysis:
 -40% of customers fall into the top two quartiles, contributing significantly to revenue
 
 -The cumulative distribution shows that 80% of customers have spending of 25,000 RWF or less
+
 Interpretation: The quartile analysis successfully segments customers into value tiers, identifying the top 25% who drive disproportionate revenue. The cumulative distribution shows that 80% of customers spend 25,000 RWF or less, revealing significant potential for revenue growth in lower tiers.
 ## Step 5: GitHub Repository
 
