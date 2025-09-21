@@ -42,61 +42,202 @@ The analysis utilizes a relational database with three primary tables:
 ### 1. Ranking Functions
 **Query:** Top 3 products per region by total sales
 ```sql
-SELECT region, product_name, total_sales, sales_rank
+-- Ranking Functions: Top 5 customers by total revenue in each region
+SELECT 
+    region,
+    customer_id,
+    name,
+    total_revenue,
+
+    -- Assigns a unique row number within each region based on revenue
+    ROW_NUMBER() OVER (
+        PARTITION BY region 
+        ORDER BY total_revenue DESC
+    ) AS row_num,
+
+    -- Rank customers (ties get the same rank, with gaps after ties)
+    RANK() OVER (
+        PARTITION BY region 
+        ORDER BY total_revenue DESC
+    ) AS revenue_rank,
+
+    -- Dense rank (ties get the same rank, but no gaps in ranking numbers)
+    DENSE_RANK() OVER (
+        PARTITION BY region 
+        ORDER BY total_revenue DESC
+    ) AS dense_rank,
+
+    -- Percent rank (relative position as percentage, excluding equals).
+    -- Cast to numeric so ROUND works in PostgreSQL.
+    ROUND((PERCENT_RANK() OVER (
+        PARTITION BY region 
+        ORDER BY total_revenue DESC
+    ))::numeric * 100, 2) AS percent_rank
+
 FROM (
-    SELECT c.region, p.name as product_name, SUM(t.amount) as total_sales,
-           RANK() OVER (PARTITION BY c.region ORDER BY SUM(t.amount) DESC) as sales_rank
+    -- Aggregate revenue per customer per region
+    SELECT 
+        c.region,
+        c.customer_id,
+        c.name,
+        SUM(t.amount) AS total_revenue
     FROM transactions t
-    JOIN customers c ON t.customer_id = c.customer_id
-    JOIN products p ON t.product_id = p.product_id
-    GROUP BY c.region, p.name
-) ranked_products
-WHERE sales_rank <= 3
-ORDER BY region, sales_rank;
+    JOIN customers c 
+      ON t.customer_id = c.customer_id
+    GROUP BY c.region, c.customer_id, c.name
+) customer_revenue
+
+-- Filter to keep only top 5 customers per region
+WHERE RANK() OVER (
+        PARTITION BY region 
+        ORDER BY total_revenue DESC
+    ) <= 5
+
+ORDER BY region, revenue_rank;
+
 ```
 Interpretation: This query reveals the top 3 bestselling products in each region, showing that Coffee Makers dominate in urban areas while coffee beans are more popular in rural regions.
 
 ### 2. Aggregate Functions
 **Query:** Running total of sales by month
 ```sql
-SELECT TO_CHAR(sale_date, 'YYYY-MM') as sales_month,
-       SUM(amount) as monthly_sales,
-       SUM(SUM(amount)) OVER (ORDER BY TO_CHAR(sale_date, 'YYYY-MM')) as running_total
-FROM transactions
-GROUP BY TO_CHAR(sale_date, 'YYYY-MM')
+WITH monthly_sales AS (
+    SELECT 
+        -- Keep this as a date (month truncated), not text
+        DATE_TRUNC('month', sale_date) AS sales_month,
+        SUM(amount) AS monthly_sales
+    FROM transactions
+    GROUP BY DATE_TRUNC('month', sale_date)
+)
+SELECT 
+    -- You can still format as YYYY-MM for readability
+    TO_CHAR(sales_month, 'YYYY-MM') AS sales_month_label,
+    monthly_sales,
+
+    -- Running total
+    SUM(monthly_sales) OVER (
+        ORDER BY sales_month 
+        ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW
+    ) AS running_total,
+
+    -- 3-month moving average (row-based: last 2 + current)
+    ROUND(
+        AVG(monthly_sales) OVER (
+            ORDER BY sales_month 
+            ROWS BETWEEN 2 PRECEDING AND CURRENT ROW
+        ), 2
+    ) AS moving_avg_3month_rows,
+
+    -- 3-month moving average (calendar-based: 2 months back + current)
+    ROUND(
+        AVG(monthly_sales) OVER (
+            ORDER BY sales_month 
+            RANGE BETWEEN INTERVAL '2 months' PRECEDING AND CURRENT ROW
+        ), 2
+    ) AS moving_avg_3month_range,
+
+    -- Minimum in 3-row window (prev, current, next)
+    MIN(monthly_sales) OVER (
+        ORDER BY sales_month 
+        ROWS BETWEEN 1 PRECEDING AND 1 FOLLOWING
+    ) AS min_in_window,
+
+    -- Maximum in 3-row window (prev, current, next)
+    MAX(monthly_sales) OVER (
+        ORDER BY sales_month 
+        ROWS BETWEEN 1 PRECEDING AND 1 FOLLOWING
+    ) AS max_in_window
+
+FROM monthly_sales
 ORDER BY sales_month;
+
 Interpretation: The running total shows a steady 15% monthly growth in cumulative revenue, indicating consistent business expansion throughout the reporting period.
 ```
 ### 3. Navigation Functions
 **Query:** Month-over-month sales growth percentage
 ```sql
+-- Navigation Functions: Month-over-month growth analysis
 WITH monthly_sales AS (
-    SELECT TO_CHAR(sale_date, 'YYYY-MM') as sales_month,
-           SUM(amount) as total_sales
+    SELECT 
+        -- Extract year-month as a label (e.g., "2025-01").
+        -- Note: TO_CHAR produces text, but since we only need ordering and labels, it's fine.
+        TO_CHAR(sale_date, 'YYYY-MM') AS sales_month,
+        
+        -- Aggregate monthly total sales
+        SUM(amount) AS total_sales
     FROM transactions
     GROUP BY TO_CHAR(sale_date, 'YYYY-MM')
 )
-SELECT sales_month, total_sales,
-       LAG(total_sales) OVER (ORDER BY sales_month) as previous_month_sales,
-       ROUND(((total_sales - LAG(total_sales) OVER (ORDER BY sales_month)) / 
-             LAG(total_sales) OVER (ORDER BY sales_month)) * 100, 2) as growth_percentage
+SELECT 
+    sales_month,
+
+    -- Current month's sales
+    total_sales AS current_month_sales,
+
+    -- Sales from the previous month (LAG = look backwards)
+    LAG(total_sales) OVER (ORDER BY sales_month) AS previous_month_sales,
+
+    -- Sales from the next month (LEAD = look forwards)
+    LEAD(total_sales) OVER (ORDER BY sales_month) AS next_month_sales,
+
+    -- Growth % from previous to current month
+    -- Formula: (current - previous) / previous * 100
+    ROUND(
+        ((total_sales - LAG(total_sales) OVER (ORDER BY sales_month)) 
+        / NULLIF(LAG(total_sales) OVER (ORDER BY sales_month), 0)) * 100, 
+    2) AS growth_percentage_from_previous,
+
+    -- Growth % from current to next month
+    -- Formula: (next - current) / current * 100
+    ROUND(
+        ((LEAD(total_sales) OVER (ORDER BY sales_month) - total_sales) 
+        / NULLIF(total_sales, 0)) * 100, 
+    2) AS growth_percentage_to_next
+
 FROM monthly_sales
 ORDER BY sales_month;
+
 ```
 Interpretation: February showed a temporary sales dip (-36.36%) post-holiday season, followed by a strong recovery in March (+57.14%) due to successful marketing initiatives.
 ### 4. Distribution Functions
 **Query:** Customer segmentation by spending quartiles
 ```sql
-WITH customer_stats AS (
-    SELECT c.customer_id, c.name, c.region, SUM(t.amount) as total_spent
+WITH customer_spending AS (
+    SELECT 
+        c.customer_id,
+        c.name,
+        c.region,
+        
+        -- Total money spent by each customer
+        SUM(t.amount) AS total_spent,
+        
+        -- Number of transactions per customer
+        COUNT(t.transaction_id) AS transaction_count
     FROM transactions t
     JOIN customers c ON t.customer_id = c.customer_id
     GROUP BY c.customer_id, c.name, c.region
 )
-SELECT customer_id, name, region, total_spent,
-       NTILE(4) OVER (ORDER BY total_spent) as spending_quartile
-FROM customer_stats
+SELECT 
+    customer_id,
+    name,
+    region,
+    total_spent,
+    transaction_count,
+
+    -- Divide customers into 4 groups (quartiles) by spending
+    NTILE(4) OVER (ORDER BY total_spent DESC) AS spending_quartile,
+
+    -- Cumulative distribution: % of customers with spending <= current
+    ROUND((CUME_DIST() OVER (ORDER BY total_spent))::numeric * 100, 2) 
+        AS cumulative_distribution_percent,
+
+    -- Percent rank: % of customers with lower spending (excludes equals)
+    ROUND((PERCENT_RANK() OVER (ORDER BY total_spent))::numeric * 100, 2) 
+        AS percent_rank
+
+FROM customer_spending
 ORDER BY total_spent DESC;
+
 ```
 Interpretation: Customers are segmented into four value quartiles, with the top quartile (Q1) contributing to 45% of total revenue, indicating high value concentration.
 ## Step 5: GitHub Repository
