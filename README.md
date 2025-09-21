@@ -35,7 +35,7 @@ The analysis utilizes a relational database with three primary tables:
 | `transactions` | Sales records | `transaction_id` (PK), `customer_id` (FK), `product_id` (FK), `sale_date`, `amount` |
 
 ### Entity-Relationship Diagram
-![ER Diagram](er_diagram.png)
+![ER Diagram](/Users/cindymunezero/Desktop/er_diagram.png)
 
 ## Step 4: Window Functions Implementation
 
