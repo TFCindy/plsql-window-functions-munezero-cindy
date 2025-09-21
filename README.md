@@ -231,7 +231,7 @@ The month-over-month analysis reveals severe declines of -47% and -51% in consec
 ### 4. Distribution Functions
 **Query:** Customer segmentation by spending quartiles
 ```sql
-- Distribution Functions: Customer segmentation by spending
+-- Distribution Functions: Customer segmentation by spending
 WITH customer_spending AS (
     SELECT 
         c.customer_id,
