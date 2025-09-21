@@ -105,7 +105,7 @@ ORDER BY region, revenue_rank;
 -Michael Brown (East) and Robert Johnson (North) are the sole top performers in their regions
 
 
-**** Interpretation: **** The analysis reveals Jane Smith as Kigali's top revenue generator with 45,000 RWF, while other regions have single dominant customers. The different ranking methods (RANK vs DENSE_RANK) show how tied scores are handled, providing flexibility in performance evaluation across regions.
+** Interpretation: ** The analysis reveals Jane Smith as Kigali's top revenue generator with 45,000 RWF, while other regions have single dominant customers. The different ranking methods (RANK vs DENSE_RANK) show how tied scores are handled, providing flexibility in performance evaluation across regions.
 
 ### 2. Aggregate Functions
 **Query:** Running total of sales by month
