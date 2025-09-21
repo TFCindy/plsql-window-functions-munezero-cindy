@@ -96,7 +96,7 @@ WHERE RANK() OVER (
 ORDER BY region, revenue_rank;
 
 ```
-Query Results Analysis:
+#### Query Results Analysis:
 
 -Jane Smith (Kigali) is the top customer with 45,000 RWF revenue
 
@@ -105,7 +105,7 @@ Query Results Analysis:
 -Michael Brown (East) and Robert Johnson (North) are the sole top performers in their regions
 
 
-Interpretation: The analysis reveals Jane Smith as Kigali's top revenue generator with 45,000 RWF, while other regions have single dominant customers. The different ranking methods (RANK vs DENSE_RANK) show how tied scores are handled, providing flexibility in performance evaluation across regions.
+#### Interpretation: The analysis reveals Jane Smith as Kigali's top revenue generator with 45,000 RWF, while other regions have single dominant customers. The different ranking methods (RANK vs DENSE_RANK) show how tied scores are handled, providing flexibility in performance evaluation across regions.
 
 ### 2. Aggregate Functions
 **Query:** Running total of sales by month
@@ -160,7 +160,7 @@ SELECT
 FROM monthly_sales
 ORDER BY sales_month;
 ```
-Query Results Analysis:
+#### Query Results Analysis:
 
 -January started strong with 70,000 RWF sales, followed by a significant drop to 37,000 RWF in February (-47%)
 
@@ -168,7 +168,7 @@ Query Results Analysis:
 
 -The 3-month moving average decreased from 70,000 to 41,666 RWF, indicating sustained negative momentum
 
-Interpretation: The running totals show a concerning downward trend from January's peak of 70,000 RWF to March's 18,000 RWF. The moving averages confirm sustained negative momentum, highlighting the need for immediate intervention to reverse this declining sales pattern.
+#### Interpretation: The running totals show a concerning downward trend from January's peak of 70,000 RWF to March's 18,000 RWF. The moving averages confirm sustained negative momentum, highlighting the need for immediate intervention to reverse this declining sales pattern.
 
 ### 3. Navigation Functions
 **Query:** Month-over-month sales growth percentage
@@ -215,7 +215,7 @@ FROM monthly_sales
 ORDER BY sales_month;
 
 ```
-Query Results Analysis:
+#### Query Results Analysis:
 
 -February showed a dramatic -47.14% growth decline from January
 
@@ -223,7 +223,7 @@ Query Results Analysis:
 
 -The consistent negative growth percentages indicate a serious sales performance issue
 
-Interpretation: The month-over-month analysis reveals severe declines of -47% and -51% in consecutive months. These dramatic drops indicate serious underlying issues in sales strategy or market conditions that require urgent investigation and corrective action.
+#### Interpretation: The month-over-month analysis reveals severe declines of -47% and -51% in consecutive months. These dramatic drops indicate serious underlying issues in sales strategy or market conditions that require urgent investigation and corrective action.
 ### 4. Distribution Functions
 **Query:** Customer segmentation by spending quartiles
 ```sql
@@ -264,7 +264,7 @@ FROM customer_spending
 ORDER BY total_spent DESC;
 
 ```
-Query Results Analysis:
+#### Query Results Analysis:
 
 -Customers are segmented into 4 spending quartiles, with Jane Smith in Q1 (top 25%)
 
@@ -272,7 +272,7 @@ Query Results Analysis:
 
 -The cumulative distribution shows that 80% of customers have spending of 25,000 RWF or less
 
-Interpretation: The quartile analysis successfully segments customers into value tiers, identifying the top 25% who drive disproportionate revenue. The cumulative distribution shows that 80% of customers spend 25,000 RWF or less, revealing significant potential for revenue growth in lower tiers.
+#### Interpretation: The quartile analysis successfully segments customers into value tiers, identifying the top 25% who drive disproportionate revenue. The cumulative distribution shows that 80% of customers spend 25,000 RWF or less, revealing significant potential for revenue growth in lower tiers.
 ## Step 5: GitHub Repository
 
 This repository (plsql-window-functions-munezero-cindy) is public and contains:
