@@ -53,10 +53,12 @@ FROM (
 ) ranked_products
 WHERE sales_rank <= 3
 ORDER BY region, sales_rank;
+```
 Interpretation: This query reveals the top 3 bestselling products in each region, showing that Coffee Makers dominate in urban areas while coffee beans are more popular in rural regions.
 
 ### 2. Aggregate Functions
 **Query:** Running total of sales by month
+```sql
 SELECT TO_CHAR(sale_date, 'YYYY-MM') as sales_month,
        SUM(amount) as monthly_sales,
        SUM(SUM(amount)) OVER (ORDER BY TO_CHAR(sale_date, 'YYYY-MM')) as running_total
@@ -78,9 +80,11 @@ SELECT sales_month, total_sales,
              LAG(total_sales) OVER (ORDER BY sales_month)) * 100, 2) as growth_percentage
 FROM monthly_sales
 ORDER BY sales_month;
+```
 Interpretation: February showed a temporary sales dip (-36.36%) post-holiday season, followed by a strong recovery in March (+57.14%) due to successful marketing initiatives.
 ### 4. Distribution Functions
 **Query:** Customer segmentation by spending quartiles
+```sql
 WITH customer_stats AS (
     SELECT c.customer_id, c.name, c.region, SUM(t.amount) as total_spent
     FROM transactions t
@@ -91,6 +95,7 @@ SELECT customer_id, name, region, total_spent,
        NTILE(4) OVER (ORDER BY total_spent) as spending_quartile
 FROM customer_stats
 ORDER BY total_spent DESC;
+```
 ## Step 6: Results Analysis
 
 ### 1. Descriptive Analysis (What happened?)
