@@ -66,8 +66,10 @@ FROM transactions
 GROUP BY TO_CHAR(sale_date, 'YYYY-MM')
 ORDER BY sales_month;
 Interpretation: The running total shows a steady 15% monthly growth in cumulative revenue, indicating consistent business expansion throughout the reporting period.
+```
 ### 3. Navigation Functions
 **Query:** Month-over-month sales growth percentage
+```sql
 WITH monthly_sales AS (
     SELECT TO_CHAR(sale_date, 'YYYY-MM') as sales_month,
            SUM(amount) as total_sales
