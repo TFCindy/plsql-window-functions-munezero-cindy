@@ -111,6 +111,7 @@ The analysis reveals Jane Smith as Kigali's top revenue generator with 45,000 RW
 ### 2. Aggregate Functions
 **Query:** Running total of sales by month
 ```sql
+-- Aggregate Functions: Running totals and moving averages
 WITH monthly_sales AS (
     SELECT 
         -- Keep this as a date (month truncated), not text
@@ -230,6 +231,7 @@ The month-over-month analysis reveals severe declines of -47% and -51% in consec
 ### 4. Distribution Functions
 **Query:** Customer segmentation by spending quartiles
 ```sql
+- Distribution Functions: Customer segmentation by spending
 WITH customer_spending AS (
     SELECT 
         c.customer_id,
