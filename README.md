@@ -253,16 +253,14 @@ This repository (plsql-window-functions-munezero-cindy) is public and contains:
 ## Step 6: Results Analysis
 
 ### 1. Descriptive Analysis (What happened?)
-Sales reached a peak of 108,000 RWF in March 2024, with Coffee Makers being the highest revenue-generating product. The Kigali region accounted for 38% of total sales, significantly outperforming other regions. A noticeable outlier was a 36% sales drop in February.
+Sales peaked in January at 70,000 RWF but experienced severe consecutive monthly declines of 47% and 51%. Customer revenue distribution was highly uneven, with Kigali region significantly outperforming other regions and a small group of customers generating most revenue.
 
 ### 2. Diagnostic Analysis (Why it happened?)
-The March sales peak correlated directly with a "Spring Brew" marketing campaign launched in late February. The February dip is a typical post-holiday season pattern. Kigali's dominant performance is attributed to higher population density, greater disposable income, and more frequent marketing touchpoints in the capital region compared to other areas.
+The dramatic sales decline likely resulted from post-holiday demand reduction combined with insufficient marketing continuity. Kigali's superior performance can be attributed to higher population density and income levels, while the customer concentration suggests inadequate engagement strategies for mid-tier customers.
+
 
 ### 3. Prescriptive Analysis (What to do next?)
-- **Inventory Optimization:** Increase stock levels of Coffee Makers and premium blends in Kigali by 30% before the next quarter to meet evident high demand.
-- **Marketing Strategy:** Replicate the successful "Spring Brew" campaign structure in the North, South, and West regions to stimulate growth. Pre-empt the February dip next year with a "New Year Brew" promotion.
-- **Customer Retention:** Implement a loyalty program specifically targeting the 15 customers in the top spending quartile (Q1), as they drive nearly half of all revenue.
-- **Regional Focus:** Develop region-specific product bundles based on the top-performing products in each area (e.g., a "Coffee Lover's Kit" in Kigali vs. a "Starter Brew Kit" in other regions).
+Implement immediate retention programs for top-quartile customers while developing targeted promotions to activate mid-tier spenders. Launch region-specific marketing to replicate Kigali's success and introduce quarterly initiatives to prevent future post-holiday sales drops.
 
 ## Step 7: References
 
