@@ -1,4 +1,10 @@
-# PL/SQL Window Functions Analysis
+# JavaBean Coffee Distributors Ltd-PL/SQL Window Functions Analysis
+
+**Names:MUNEZERO Cindy**
+**ID: 27120**
+
+This project analyzes sales data for JavaBean Coffee Distributors Ltd. to uncover regional performance, customer behavior, and product trends. The goal is to support data-driven decisions in inventory planning and targeted marketing strategies.  
+
 
 ## Step 1: Problem Definition
 
@@ -320,3 +326,4 @@ Implement immediate retention programs for top-quartile customers while developi
 
 **Note on Implementation:** This project was implemented using PostgreSQL 16. The standard SQL syntax for window functions (`RANK()`, `NTILE()`, `LAG()`, aggregate functions with `OVER()`, etc.) is consistent across modern relational databases including Oracle PL/SQL. All core analytical concepts required by the assignment have been successfully demonstrated.
 
+**Done on 26th September,2025.**
