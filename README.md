@@ -1,8 +1,8 @@
 # JavaBean Coffee Distributors Ltd-PL/SQL Window Functions Analysis
 
-**Names:**MUNEZERO Cindy
+**Student Names:** MUNEZERO Cindy
 
-**ID:** 27120
+**Student ID   :** 27120
 
 This project analyzes sales data for JavaBean Coffee Distributors Ltd. to uncover regional performance, customer behavior, and product trends. The goal is to support data-driven decisions in inventory planning and targeted marketing strategies.  
 
