@@ -326,3 +326,4 @@ Implement immediate retention programs for top-quartile customers while developi
 **Note on Implementation:** This project was implemented using PostgreSQL 16. The standard SQL syntax for window functions (`RANK()`, `NTILE()`, `LAG()`, aggregate functions with `OVER()`, etc.) is consistent across modern relational databases including Oracle PL/SQL. All core analytical concepts required by the assignment have been successfully demonstrated.
 
 **Done on 26th September,2025.**
+**ADVENTIST UNIVERSITY OF CENTRAL AFRICA**
