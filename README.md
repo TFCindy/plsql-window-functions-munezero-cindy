@@ -24,6 +24,7 @@ This analysis aims to achieve the following five measurable goals:
 5.  Calculate 3-month moving averages of sales using `AVG() OVER()`
 
 ## Step 3: Database Schema
+The DBMS used is Postgresql.
 
 The analysis utilizes a relational database with three primary tables:
 
